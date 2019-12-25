@@ -1,0 +1,32 @@
+{
+    "exclude": ["node_modules", "dist"],
+    "include": ["src"],
+    "compileOnSave": false,
+    "buildOnSave": false,
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "lib": ["dom", "es6", "es2018", "esnext.asynciterable"],
+        "outDir": "./dist",
+        "moduleResolution": "node",
+        "declaration": false,
+        "forceConsistentCasingInFileNames": true,
+        "listFiles": true,
+        "composite": false,
+        "removeComments": true,
+        "noImplicitAny": true,
+        "strictNullChecks": false,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "rootDir": ".",
+        "baseUrl": "."
+    }
+}
