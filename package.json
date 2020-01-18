@@ -4,8 +4,7 @@
     "main": "index.ts",
     "scripts": {
         "start:dev": "tsc && nodemon index.ts",
-        "start": "ts-node index.ts",
-        "easygraphql-load-tester": "artillery run artillery.yml"
+        "start": "ts-node index.ts"
     },
     "author": "",
     "license": "MIT",
