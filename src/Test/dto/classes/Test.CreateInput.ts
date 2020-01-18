@@ -1,5 +1,5 @@
-import { AddressDto } from "./types/Address.dto";
-import { ArgsType, Field } from "type-graphql";
+import { AddressDto } from './types/Address.dto';
+import { ArgsType, Field } from 'type-graphql';
 
 @ArgsType()
 export class CreateTestInput {

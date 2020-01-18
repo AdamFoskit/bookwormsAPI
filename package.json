@@ -1,55 +1,66 @@
 {
-  "name": "typegraphql",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon index.ts",
-    "start": "ts-node index.ts"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@types/mongoose": "^5.5.32",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
-    "apollo-server-express": "^2.3.1",
-    "class-validator": "^0.11.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.16.4",
-    "graphql": "^14.0.2",
-    "mongodb": "^3.3.3",
-    "mongoose": "^5.7.13",
-    "nodemon": "^2.0.2",
-    "reflect-metadata": "^0.1.12",
-    "type-graphql": "^0.17.5"
-  },
-  "devDependencies": {
-    "@types/express": "^4.16.0",
-    "@types/graphql": "^14.0.4",
-    "@types/node": "^10.17.9",
-    "eslint": "^6.7.2",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^1.18.2",
-    "prettier-eslint": "^9.0.0",
-    "ts-node": "^8.5.4",
-    "typescript": "^3.2.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AdamFoskit/TypeGraphQL.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/AdamFoskit/TypeGraphQL/issues"
-  },
-  "homepage": "https://github.com/AdamFoskit/TypeGraphQL#readme",
-  "description": ""
+    "name": "typegraphql",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "scripts": {
+        "start:dev": "tsc && nodemon index.ts",
+        "start": "ts-node index.ts",
+        "easygraphql-load-tester": "artillery run artillery.yml"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@types/mongoose": "^5.5.32",
+        "@types/stripe": "^7.13.19",
+        "apollo-server-express": "^2.3.1",
+        "artillery": "^1.6.0-29",
+        "aws-sdk": "^2.600.0",
+        "class-validator": "^0.11.0",
+        "dotenv": "^8.2.0",
+        "expo-server-sdk": "^3.4.0",
+        "express": "^4.16.4",
+        "graphql": "^14.0.2",
+        "mongodb": "^3.3.3",
+        "mongoose": "^5.7.13",
+        "nodemon": "^2.0.2",
+        "reflect-metadata": "^0.1.13",
+        "stripe": "^7.15.0",
+        "type-graphql": "^0.17.5"
+    },
+    "devDependencies": {
+        "@types/express": "^4.16.0",
+        "@types/graphql": "^14.0.4",
+        "@types/jest": "^24.0.25",
+        "@types/node": "^10.17.9",
+        "@typescript-eslint/eslint-plugin": "^2.15.0",
+        "@typescript-eslint/parser": "^2.15.0",
+        "babel-eslint": "^10.0.3",
+        "easygraphql-load-tester": "^2.0.0",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb": "^18.0.1",
+        "eslint-config-google": "^0.14.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-react": "^7.14.3",
+        "eslint-plugin-react-hooks": "^1.7.0",
+        "jest": "^24.9.0",
+        "prettier": "^1.19.1",
+        "prettier-eslint": "^9.0.0",
+        "prettier-eslint-cli": "^5.0.0",
+        "ts-jest": "^24.3.0",
+        "ts-node": "^8.5.4",
+        "typescript": "^3.7.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AdamFoskit/TypeGraphQL.git"
+    },
+    "keywords": [],
+    "bugs": {
+        "url": "https://github.com/AdamFoskit/TypeGraphQL/issues"
+    },
+    "homepage": "https://github.com/AdamFoskit/TypeGraphQL#readme",
+    "description": ""
 }

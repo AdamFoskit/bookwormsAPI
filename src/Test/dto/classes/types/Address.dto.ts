@@ -1,7 +1,7 @@
-import { ObjectType, Field, ArgsType, InputType } from "type-graphql";
+import { Field, InputType, ObjectType } from 'type-graphql';
 
 @ObjectType()
-@ArgsType()
+@InputType('CreateAddressInput')
 export class AddressDto {
     @Field()
     state: string;
@@ -17,7 +17,7 @@ export class AddressDto {
 }
 
 @ObjectType()
-@InputType()
+@InputType('UpdateAddressDtoInput')
 export class UpdateAddressDto {
     @Field({ nullable: true })
     state: string;

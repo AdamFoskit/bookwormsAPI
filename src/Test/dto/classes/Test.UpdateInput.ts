@@ -1,5 +1,5 @@
-import { UpdateAddressDto } from "./types/Address.dto";
-import { ArgsType, Field } from "type-graphql";
+import { UpdateAddressDto } from './types/Address.dto';
+import { ArgsType, Field } from 'type-graphql';
 
 @ArgsType()
 export class UpdateCoachInput {

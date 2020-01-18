@@ -1,9 +1,9 @@
-import { ObjectType, Field, ArgsType } from "type-graphql";
-import { AddressDto } from "./classes/types/Address.dto";
+import { ObjectType, Field, ArgsType } from 'type-graphql';
+import { AddressDto } from './classes/types/Address.dto';
 
 @ObjectType()
 @ArgsType()
-export default class CoachDto {
+export default class TestDto {
     @Field()
     _id: string;
 
