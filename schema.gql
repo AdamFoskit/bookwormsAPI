@@ -19,6 +19,7 @@ input CreateAddressInput {
 
 type Mutation {
   createTest(address: CreateAddressInput!, first_name: String!, last_name: String!): Boolean!
+  updateTest(_id: String!, address: UpdateAddressDtoInput, first_name: String, last_name: String): Boolean!
 }
 
 type Query {

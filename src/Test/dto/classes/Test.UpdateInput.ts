@@ -1,8 +1,12 @@
-import { UpdateAddressDto } from './types/Address.dto';
 import { ArgsType, Field } from 'type-graphql';
 
+import { UpdateAddressDto } from './types/Address.dto';
+
 @ArgsType()
-export class UpdateCoachInput {
+export class UpdateTestInput {
+    @Field()
+    _id: string;
+
     @Field(() => UpdateAddressDto, { nullable: true })
     address: UpdateAddressDto;
 

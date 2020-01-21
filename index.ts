@@ -17,7 +17,7 @@ const main = async () => {
     await mongoose.connect(process.env.MONGODB_PATH, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        poolSize: 100,
+        poolSize: 20,
     });
     const schema = await buildSchema({
         resolvers: [TestQueryResolver, TestMutationResolver],

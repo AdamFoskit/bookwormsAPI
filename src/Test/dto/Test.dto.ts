@@ -1,4 +1,5 @@
-import { ObjectType, Field, ArgsType } from 'type-graphql';
+import { ArgsType, Field, ObjectType } from 'type-graphql';
+
 import { AddressDto } from './classes/types/Address.dto';
 
 @ObjectType()
