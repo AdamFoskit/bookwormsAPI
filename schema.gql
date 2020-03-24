@@ -3,48 +3,64 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type AddressDto {
-  state: String!
-  city: String!
-  zip: Float!
-  street: String!
+input CreateUserInput {
+  firebaseID: String!
+  email: String!
+  firstName: String!
+  lastName: String!
 }
 
-input CreateAddressInput {
-  state: String!
-  city: String!
-  zip: Float!
-  street: String!
+type EventDto {
+  title: String!
+  start: String!
+  end: String!
+  color: String!
 }
 
 type Mutation {
-  createTest(address: CreateAddressInput!, first_name: String!, last_name: String!): Boolean!
-  updateTest(_id: String!, address: UpdateAddressDtoInput, first_name: String, last_name: String): Boolean!
+  """
+  Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
+  """
+  createUser(firebaseID: String!, email: String!, firstName: String!, lastName: String!): UserDto
+
+  """
+  Use to update any part of one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
+  """
+  updateUser(_id: String!, email: String, firstName: String, lastName: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!]): UserDto
 }
 
 type Query {
-  getTests: [TestDto!]!
+  """Get all Users."""
+  getUsers: [UserDto!]!
+
+  """
+  Get one User. If no User can be found with the supplied ID, this will return null.
+  """
+  getUserByID(id: String!): UserDto
 }
 
-type TestDto {
+input UpdateEventInput {
+  title: String!
+  start: String!
+  end: String!
+  color: String!
+}
+
+input UpdateUserInput {
   _id: String!
-  address: AddressDto!
-  first_name: String!
-  last_name: String!
-  teams: [String!]!
-  favorites: [String!]!
+  email: String
+  firstName: String
+  lastName: String
+  shifts: [UpdateEventInput!]
+  preferences: [UpdateEventInput!]
 }
 
-type UpdateAddressDto {
-  state: String
-  city: String
-  zip: Float
-  street: String
-}
-
-input UpdateAddressDtoInput {
-  state: String
-  city: String
-  zip: Float
-  street: String
+type UserDto {
+  _id: String!
+  firebaseID: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  shifts: [EventDto!]!
+  preferences: [EventDto!]!
 }

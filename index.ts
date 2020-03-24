@@ -2,12 +2,10 @@ import 'reflect-metadata';
 
 import { ApolloServer } from 'apollo-server-express';
 import * as Express from 'express';
+import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
-
-import { TestMutationResolver } from './src/Test/resolvers/Test.Mutations.resolver';
-import { TestQueryResolver } from './src/Test/resolvers/Test.Queries.resolver';
 
 require('dotenv').config();
 
@@ -17,10 +15,11 @@ const main = async () => {
     await mongoose.connect(process.env.MONGODB_PATH, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: true,
         poolSize: 20,
     });
     const schema = await buildSchema({
-        resolvers: [TestQueryResolver, TestMutationResolver],
+        resolvers: [__dirname + "/src/**/*.resolver.ts"],
         // eslint-disable-next-line no-undef
         emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
     });
@@ -28,10 +27,10 @@ const main = async () => {
     const apolloServer = new ApolloServer({ schema, playground: true, introspection: true });
 
     const app = Express();
-
+    app.use(helmet());
     apolloServer.applyMiddleware({ app });
 
-    app.listen(process.env.PORT || 4000, () => {
+    app.listen(process.env.PORT || 7000, () => {
         console.log('server started on http://localhost:4000/graphql');
     });
 };
