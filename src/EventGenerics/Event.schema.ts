@@ -3,4 +3,5 @@ export const EventSchema = {
     start: String,
     end: String,
     color: String,
+    value: String,
 }

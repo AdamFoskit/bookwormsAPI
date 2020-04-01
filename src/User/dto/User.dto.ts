@@ -19,6 +19,9 @@ export default class UserDto {
     @Field()
     lastName: string;
 
+    @Field()
+    userType: string;
+
     @Field(() => [EventDto])
     shifts: EventDto[];
 

@@ -3,11 +3,23 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type BlackoutDto {
+  _id: String!
+  start: String!
+  end: String!
+}
+
+input CreateBlackoutInput {
+  start: String!
+  end: String!
+}
+
 input CreateUserInput {
   firebaseID: String!
   email: String!
   firstName: String!
   lastName: String!
+  userType: String!
 }
 
 type EventDto {
@@ -15,21 +27,44 @@ type EventDto {
   start: String!
   end: String!
   color: String!
+  value: String
 }
 
 type Mutation {
   """
+  Use to create one Blackout. Date must be passed as a string. Must use date.toISOString() if updating start/end.
+  """
+  createBlackout(start: String!, end: String!): BlackoutDto
+
+  """
+  Use to update any part of one Blackout. Date must be passed as a string. Must
+  use date.toISOString() if updating start/end.
+  """
+  updateBlackout(_id: String!, start: String, end: String): BlackoutDto
+
+  """Use to delete a blackout date. This cannot be reversed"""
+  deleteBlackout(id: String!): Boolean
+
+  """
   Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
-  createUser(firebaseID: String!, email: String!, firstName: String!, lastName: String!): UserDto
+  createUser(firebaseID: String!, email: String!, firstName: String!, lastName: String!, userType: String!): UserDto
 
   """
   Use to update any part of one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
-  updateUser(_id: String!, email: String, firstName: String, lastName: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!]): UserDto
+  updateUser(_id: String!, email: String, firstName: String, lastName: String, userType: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!]): UserDto
 }
 
 type Query {
+  """Get all Blackouts."""
+  getBlackouts: [BlackoutDto!]!
+
+  """
+  Get one Blackout. If no Blackout can be found with the supplied ID, this will return null.
+  """
+  getBlackoutByID(id: String!): BlackoutDto
+
   """Get all Users."""
   getUsers: [UserDto!]!
 
@@ -37,6 +72,17 @@ type Query {
   Get one User. If no User can be found with the supplied ID, this will return null.
   """
   getUserByID(id: String!): UserDto
+
+  """
+  Get one User. If no User can be found with the supplied FirebaseID, this will return null.
+  """
+  getUserByFirebaseID(firebaseID: String!): UserDto
+}
+
+input UpdateBlackoutDtoInput {
+  _id: String!
+  start: String
+  end: String
 }
 
 input UpdateEventInput {
@@ -44,6 +90,7 @@ input UpdateEventInput {
   start: String!
   end: String!
   color: String!
+  value: String
 }
 
 input UpdateUserInput {
@@ -51,6 +98,7 @@ input UpdateUserInput {
   email: String
   firstName: String
   lastName: String
+  userType: String
   shifts: [UpdateEventInput!]
   preferences: [UpdateEventInput!]
 }
@@ -61,6 +109,7 @@ type UserDto {
   email: String!
   firstName: String!
   lastName: String!
+  userType: String!
   shifts: [EventDto!]!
   preferences: [EventDto!]!
 }
