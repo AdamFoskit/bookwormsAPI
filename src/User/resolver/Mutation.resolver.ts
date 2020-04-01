@@ -9,7 +9,7 @@ import UserSchema from '../User.schema';
 export default class UserQueryResolver {
     @Mutation(() => UserDto, { description: "Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.", nullable: true })
     async createUser(@Args() input: CreateUserDto): Promise<UserDto> {
-        return (await UserSchema.create(input)).toObject()
+        return await UserSchema.create(input)
     }
 
     @Mutation(() => UserDto, { description: "Use to update any part of one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.", nullable: true })

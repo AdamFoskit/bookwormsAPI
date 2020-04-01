@@ -17,6 +17,9 @@ export default class UpdateUserDto {
     @Field({ nullable: true })
     lastName: string;
 
+    @Field({ nullable: true })
+    userType: string;
+
     @Field(() => [EventInputDto], { nullable: true })
     shifts: EventInputDto[];
 

@@ -14,4 +14,7 @@ export default class CreateUserDto {
 
     @Field()
     lastName: string;
+
+    @Field()
+    userType: string;
 }

@@ -13,4 +13,7 @@ export default class EventInputDto {
 
     @Field()
     color: string;
+
+    @Field({ nullable: true })
+    value: string;
 }
