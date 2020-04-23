@@ -54,6 +54,9 @@ type Mutation {
   Use to update any part of one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
   updateUser(_id: String!, email: String, firstName: String, lastName: String, userType: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!]): UserDto
+
+  """Use to update many user's shifts."""
+  updateUsersShifts(users: [UpdateUserShift!]!): [UserDto!]
 }
 
 type Query {
@@ -101,6 +104,15 @@ input UpdateUserInput {
   userType: String
   shifts: [UpdateEventInput!]
   preferences: [UpdateEventInput!]
+}
+
+input UpdateUserShift {
+  _id: String!
+  shifts: [UpdateEventInput!]
+}
+
+input UpdateUserShiftsDto {
+  users: [UpdateUserShift!]!
 }
 
 type UserDto {
