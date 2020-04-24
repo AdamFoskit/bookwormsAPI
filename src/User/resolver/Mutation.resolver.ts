@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from 'type-graphql';
+import { Arg, Args, Mutation, Resolver } from 'type-graphql';
 
 import CreateUserDto from '../dto/User.Create.dto';
 import UserDto from '../dto/User.dto';
@@ -38,5 +38,11 @@ export default class UserQueryResolver {
         })
 
         return foundUsers;
+    }
+
+    @Mutation(() => Boolean, { description: "Use delete a user. Not reversible.." })
+    async deleteUser(@Arg('id') id: string): Promise<boolean> {
+        await UserSchema.findByIdAndDelete(id).lean();
+        return true;
     }
 }

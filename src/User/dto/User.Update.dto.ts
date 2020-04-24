@@ -25,4 +25,7 @@ export default class UpdateUserDto {
 
     @Field(() => [EventInputDto], { nullable: true })
     preferences: EventInputDto[];
+
+    @Field(() => [String], { nullable: true })
+    availableShifts: string[]
 }
