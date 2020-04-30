@@ -4,4 +4,5 @@ export const EventSchema = {
     end: String,
     color: String,
     value: String,
+    available: Boolean
 }

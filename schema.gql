@@ -5,9 +5,13 @@
 
 type AvailableShiftDto {
   _id: String!
-  user_id: String!
-  shift: EventDto!
-  full_user: UserDto
+  title: String!
+  start: String!
+  end: String!
+  color: String!
+  value: String
+  available: Boolean!
+  full_user: UserDto!
 }
 
 type BlackoutDto {
@@ -16,9 +20,10 @@ type BlackoutDto {
   end: String!
 }
 
-input CreateAvailableShiftInput {
-  user_id: String!
-  shift: UpdateEventInput!
+type ClockDto {
+  _id: String!
+  time: String!
+  location: String!
 }
 
 input CreateBlackoutInput {
@@ -32,28 +37,20 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   userType: String!
+  color: String
 }
 
 type EventDto {
+  _id: String!
   title: String!
   start: String!
   end: String!
   color: String!
   value: String
+  available: Boolean!
 }
 
 type Mutation {
-  updateAvailableShift(_id: String!, user_id: String!, shift: UpdateEventInput!): AvailableShiftDto
-
-  """Use to post an AvailableShift."""
-  postAvailableShift(user_id: String!, shift: UpdateEventInput!): AvailableShiftDto!
-
-  """Use to delete an AvailableShift. This cannot be reversed"""
-  deleteAvailableShift(id: String!): Boolean
-
-  """Use to claim an AvailableShift."""
-  claimAvailableShift(id: String!): Boolean
-
   """
   Use to create one Blackout. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
@@ -71,29 +68,33 @@ type Mutation {
   """
   Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
-  createUser(firebaseID: String!, email: String!, firstName: String!, lastName: String!, userType: String!): UserDto
+  createUser(firebaseID: String!, email: String!, firstName: String!, lastName: String!, userType: String!, color: String): UserDto
 
   """
   Use to update any part of one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
   """
-  updateUser(_id: String!, email: String, firstName: String, lastName: String, userType: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!], availableShifts: [String!]): UserDto
+  updateUser(_id: String!, email: String, firstName: String, lastName: String, userType: String, color: String, shifts: [UpdateEventInput!], preferences: [UpdateEventInput!]): UserDto
 
-  """Use to update many user's shifts."""
+  """Use to update many users' shifts."""
   updateUsersShifts(users: [UpdateUserShift!]!): [UserDto!]
 
-  """Use delete a user. Not reversible.."""
+  """Use to add a shift to the trade board."""
+  addAvailableShift(shiftID: String!, userID: String!): AvailableShiftDto
+
+  """Use to remove a shift from the trade board."""
+  removeAvailableShift(shiftID: String!, userID: String!): Boolean!
+
+  """Use to clock in."""
+  clockIn(location: String!, time: String!, userID: String!): Boolean!
+
+  """Use to clock out."""
+  clockOut(location: String!, time: String!, userID: String!): Boolean!
+
+  """Use to delete a user. Not reversible.."""
   deleteUser(id: String!): Boolean!
 }
 
 type Query {
-  """Get all AvailableShifts."""
-  getAvailableShifts: [AvailableShiftDto!]!
-
-  """
-  Get one AvailableShift. If no AvailableShift can be found with the supplied ID, this will return null.
-  """
-  getAvailableShiftByID(id: String!): AvailableShiftDto
-
   """Get all Blackouts."""
   getBlackouts: [BlackoutDto!]!
 
@@ -114,12 +115,11 @@ type Query {
   Get one User. If no User can be found with the supplied FirebaseID, this will return null.
   """
   getUserByFirebaseID(firebaseID: String!): UserDto
-}
 
-input UpdateAvailableShiftDtoInput {
-  _id: String!
-  user_id: String!
-  shift: UpdateEventInput!
+  """
+  Get one User. If no User can be found with the supplied FirebaseID, this will return null.
+  """
+  getAvailableShifts: [AvailableShiftDto!]
 }
 
 input UpdateBlackoutDtoInput {
@@ -129,11 +129,13 @@ input UpdateBlackoutDtoInput {
 }
 
 input UpdateEventInput {
+  _id: String!
   title: String!
   start: String!
   end: String!
   color: String!
   value: String
+  available: Boolean = false
 }
 
 input UpdateUserInput {
@@ -142,9 +144,9 @@ input UpdateUserInput {
   firstName: String
   lastName: String
   userType: String
+  color: String
   shifts: [UpdateEventInput!]
   preferences: [UpdateEventInput!]
-  availableShifts: [String!]
 }
 
 input UpdateUserShift {
@@ -163,8 +165,9 @@ type UserDto {
   firstName: String!
   lastName: String!
   userType: String!
+  color: String
   shifts: [EventDto!]!
   preferences: [EventDto!]!
-  availableShifts: [String!]!
-  full_availableShifts: [AvailableShiftDto!]!
+  clockIns: [ClockDto!]
+  clockOuts: [ClockDto!]
 }

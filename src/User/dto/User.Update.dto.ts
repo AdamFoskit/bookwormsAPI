@@ -20,12 +20,18 @@ export default class UpdateUserDto {
     @Field({ nullable: true })
     userType: string;
 
+    @Field({ nullable: true })
+    color: string;
+
     @Field(() => [EventInputDto], { nullable: true })
     shifts: EventInputDto[];
 
     @Field(() => [EventInputDto], { nullable: true })
     preferences: EventInputDto[];
 
-    @Field(() => [String], { nullable: true })
-    availableShifts: string[]
+    // @Field(() => [ClockInputDto], { nullable: true })
+    // clockIns: ClockInputDto[]
+
+    // @Field(() => [ClockInputDto], { nullable: true })
+    // clockOuts: ClockInputDto[]
 }

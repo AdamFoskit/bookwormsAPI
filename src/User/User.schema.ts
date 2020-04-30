@@ -10,8 +10,11 @@ const UserSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     userType: String,
+    color: String,
     shifts: [{ ...EventSchema, default: [] }],
-    preferences: [{ ...EventSchema, default: [] }]
+    preferences: [{ ...EventSchema, default: [] }],
+    clockIns: [{ time: String, location: String, }],
+    clockOuts: [{ time: String, location: String, default: [] }]
 });
 
 export default mongoose.model('User', UserSchema);

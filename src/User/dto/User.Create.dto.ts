@@ -17,4 +17,7 @@ export default class CreateUserDto {
 
     @Field()
     userType: string;
+
+    @Field({ nullable: true })
+    color: string;
 }

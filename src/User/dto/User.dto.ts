@@ -1,8 +1,7 @@
-import { Field, ObjectType, Root } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
 
-import AvailableShiftsSchema from '../../AvailableShifts/AvailableShifts.schema';
-import AvailableShiftDto from '../../AvailableShifts/dto/AvailableShifts.dto';
 import EventDto from '../../EventGenerics/Event.dto';
+import ClockDto from './classes/Clock.dto';
 
 @ObjectType()
 export default class UserDto {
@@ -24,17 +23,18 @@ export default class UserDto {
     @Field()
     userType: string;
 
+    @Field({ nullable: true })
+    color: string;
+
     @Field(() => [EventDto])
     shifts: EventDto[];
 
     @Field(() => [EventDto])
     preferences: EventDto[];
 
-    @Field(() => [String])
-    availableShifts: string[]
+    @Field(() => [ClockDto], { defaultValue: [] })
+    clockIns: ClockDto[]
 
-    @Field(() => [AvailableShiftDto])
-    async full_availableShifts(@Root() user: UserDto): Promise<AvailableShiftDto[]> {
-        return await AvailableShiftsSchema.find({ _id: { $in: user.availableShifts } }).lean()
-    }
+    @Field(() => [ClockDto], { defaultValue: [] })
+    clockOuts: ClockDto[]
 }
