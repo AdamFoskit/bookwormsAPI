@@ -38,7 +38,7 @@ export default class PendingShiftMutation {
         console.log({ removedShift });
 
         removedShift.available = false;
-        foundToUser.shifts = foundToUser.shifts.push(removedShift)
+        foundToUser.shifts.push(removedShift)
         foundToUser.markModified('shifts')
         foundFromUser.markModified('shifts')
         foundToUser.save();
