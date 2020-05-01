@@ -50,6 +50,15 @@ type EventDto {
   available: Boolean!
 }
 
+input EventWithoutIDInput {
+  title: String!
+  start: String!
+  end: String!
+  color: String!
+  value: String
+  available: Boolean = false
+}
+
 type Mutation {
   """
   Use to create one Blackout. Date must be passed as a string. Must use date.toISOString() if updating start/end.
@@ -64,6 +73,9 @@ type Mutation {
 
   """Use to delete a blackout date. This cannot be reversed"""
   deleteBlackout(id: String!): Boolean
+  addPendingShift(toUserID: String!, fromUserID: String!, shiftID: String!): String!
+  declinePendingShift(shiftID: String!): Boolean!
+  acceptPendingShift(shiftID: String!): Boolean!
 
   """
   Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
@@ -79,10 +91,10 @@ type Mutation {
   updateUsersShifts(users: [UpdateUserShift!]!): [UserDto!]
 
   """Use to add a shift to the trade board."""
-  addAvailableShift(shiftID: String!, userID: String!): AvailableShiftDto
+  addTradeBoardShift(shiftID: String!, userID: String!): AvailableShiftDto
 
   """Use to remove a shift from the trade board."""
-  removeAvailableShift(shiftID: String!, userID: String!): Boolean!
+  removeTradeBoardShift(shiftID: String!, userID: String!): Boolean!
 
   """Use to clock in."""
   clockIn(location: String!, time: String!, userID: String!): Boolean!
@@ -94,6 +106,20 @@ type Mutation {
   deleteUser(id: String!): Boolean!
 }
 
+type PendingShiftDto {
+  _id: String!
+  title: String!
+  start: String!
+  end: String!
+  color: String!
+  value: String
+  available: Boolean!
+  fromUserID: String!
+  full_fromUser: UserDto
+  toUserID: UserDto!
+  full_toUser: UserDto
+}
+
 type Query {
   """Get all Blackouts."""
   getBlackouts: [BlackoutDto!]!
@@ -102,6 +128,7 @@ type Query {
   Get one Blackout. If no Blackout can be found with the supplied ID, this will return null.
   """
   getBlackoutByID(id: String!): BlackoutDto
+  getPendingShifts: [PendingShiftDto!]!
 
   """Get all Users."""
   getUsers: [UserDto!]!
@@ -119,7 +146,7 @@ type Query {
   """
   Get one User. If no User can be found with the supplied FirebaseID, this will return null.
   """
-  getAvailableShifts: [AvailableShiftDto!]
+  getTradeBoardShifts: [AvailableShiftDto!]
 }
 
 input UpdateBlackoutDtoInput {
@@ -151,7 +178,7 @@ input UpdateUserInput {
 
 input UpdateUserShift {
   _id: String!
-  shifts: [UpdateEventInput!]
+  shifts: [EventWithoutIDInput!]
 }
 
 input UpdateUserShiftsDto {

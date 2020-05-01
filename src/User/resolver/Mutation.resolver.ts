@@ -42,7 +42,7 @@ export default class UserQueryResolver {
 
 
     @Mutation(() => AvailableShiftDto, { description: "Use to add a shift to the trade board.", nullable: true })
-    async addAvailableShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<AvailableShiftDto> {
+    async addTradeBoardShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<AvailableShiftDto> {
         const foundUser = await UserSchema.findOne({ _id: userID, 'shifts._id': shiftID });
         if (!foundUser) throw new Error("No User could be found with that ID that also has that shift ID.")
         const foundShift = foundUser.shifts.find((shift) => shift._id.toString() == shiftID)
@@ -54,7 +54,7 @@ export default class UserQueryResolver {
     }
 
     @Mutation(() => Boolean, { description: "Use to remove a shift from the trade board." })
-    async removeAvailableShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<boolean> {
+    async removeTradeBoardShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<boolean> {
         const foundUser = await UserSchema.findOne({ _id: userID, 'shifts._id': shiftID });
         if (!foundUser) throw new Error("No User could be found with that ID that also has that shift ID.")
         const foundShift = foundUser.shifts.find((shift) => shift._id.toString() == shiftID)

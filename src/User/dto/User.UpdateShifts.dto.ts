@@ -1,6 +1,27 @@
 import { ArgsType, Field, InputType } from 'type-graphql';
 
-import EventInputDto from '../../EventGenerics/Event.Mutate.dto';
+
+
+@InputType()
+class EventWithoutIDInput {
+    @Field()
+    title: string;
+
+    @Field()
+    start: string;
+
+    @Field()
+    end: string;
+
+    @Field()
+    color: string;
+
+    @Field({ nullable: true })
+    value: string;
+
+    @Field({ defaultValue: false })
+    available: boolean;
+}
 
 @ArgsType()
 @InputType()
@@ -8,8 +29,8 @@ class UpdateUserShift {
     @Field()
     _id: string;
 
-    @Field(() => [EventInputDto], { nullable: true })
-    shifts: EventInputDto[];
+    @Field(() => [EventWithoutIDInput], { nullable: true })
+    shifts: EventWithoutIDInput[];
 }
 
 @ArgsType()
