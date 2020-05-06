@@ -116,7 +116,7 @@ type PendingShiftDto {
   available: Boolean!
   fromUserID: String!
   full_fromUser: UserDto
-  toUserID: UserDto!
+  toUserID: String!
   full_toUser: UserDto
 }
 

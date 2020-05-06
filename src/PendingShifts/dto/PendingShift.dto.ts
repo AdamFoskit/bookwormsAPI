@@ -14,7 +14,7 @@ export default class PendingShiftDto extends EventDto {
         return await UserSchema.findById(PendingShiftDto.fromUserID).lean()
     }
 
-    @Field(() => UserDto)
+    @Field()
     toUserID: string;
 
     @Field(() => UserDto, { nullable: true })
