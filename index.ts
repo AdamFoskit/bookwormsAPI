@@ -4,8 +4,8 @@ import { ApolloServer } from 'apollo-server-express';
 import * as Express from 'express';
 import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
-import * as path from 'path';
-import { buildSchema } from 'type-graphql';
+
+import { CreateSchema } from './CreateSchema';
 
 require('dotenv').config();
 
@@ -18,11 +18,7 @@ const main = async () => {
         useFindAndModify: true,
         poolSize: 20,
     });
-    const schema = await buildSchema({
-        resolvers: [__dirname + "/src/**/*.resolver.ts"],
-        // eslint-disable-next-line no-undef
-        emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
-    });
+    const schema = await CreateSchema()
 
     const apolloServer = new ApolloServer({ schema, playground: true, introspection: true });
 
