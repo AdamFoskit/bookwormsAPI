@@ -1,5 +1,6 @@
 import { Arg, Args, Mutation, Resolver } from 'type-graphql';
 
+import { fb } from '../../../index';
 import AvailableShiftDto from '../dto/classes/AvailableShift.dto';
 import CreateUserDto from '../dto/User.Create.dto';
 import UserDto from '../dto/User.dto';
@@ -90,7 +91,12 @@ export default class UserQueryResolver {
 
     @Mutation(() => Boolean, { description: "Use to delete a user. Not reversible.." })
     async deleteUser(@Arg('id') id: string): Promise<boolean> {
-        await UserSchema.findByIdAndDelete(id).lean();
+        const { firebaseID } = await UserSchema.findByIdAndDelete(id).lean();
+        try {
+            await fb.auth().deleteUser(firebaseID)
+        } catch (e) {
+            console.log("Error deleting firebase user:", e.message);
+        }
         return true;
     }
 }

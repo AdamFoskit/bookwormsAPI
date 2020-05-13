@@ -3,12 +3,17 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import * as bodyparser from 'body-parser';
 import * as Express from 'express';
+import * as admin from 'firebase-admin';
 import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
 import { buildSchema } from 'type-graphql';
 
 require('dotenv').config();
+
+export const fb = admin.initializeApp({
+    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_CONFIG))
+});
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const main = async () => {
