@@ -97,8 +97,10 @@ export default class UserQueryResolver {
                 await fb.auth().deleteUser(deletedUser.firebaseID)
             } catch (e) {
                 console.log("Error deleting firebase user:", e.message);
+            } finally {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
