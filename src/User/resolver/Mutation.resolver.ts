@@ -91,11 +91,13 @@ export default class UserQueryResolver {
 
     @Mutation(() => Boolean, { description: "Use to delete a user. Not reversible.." })
     async deleteUser(@Arg('email') email: string): Promise<boolean> {
-        const { firebaseID } = await UserSchema.findOneAndDelete({ email }).lean();
-        try {
-            await fb.auth().deleteUser(firebaseID)
-        } catch (e) {
-            console.log("Error deleting firebase user:", e.message);
+        const deletedUser = await UserSchema.findOneAndDelete({ email }).lean();
+        if (deletedUser) {
+            try {
+                await fb.auth().deleteUser(deletedUser.firebaseID)
+            } catch (e) {
+                console.log("Error deleting firebase user:", e.message);
+            }
         }
         return true;
     }
