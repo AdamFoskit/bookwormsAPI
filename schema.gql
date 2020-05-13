@@ -97,10 +97,10 @@ type Mutation {
   removeTradeBoardShift(shiftID: String!, userID: String!): Boolean!
 
   """Use to clock in."""
-  clockIn(location: String!, time: String!, userID: String!): Boolean!
+  clockIn(location: String!, time: String!, email: String!): Boolean!
 
   """Use to clock out."""
-  clockOut(location: String!, time: String!, userID: String!): Boolean!
+  clockOut(location: String!, time: String!, email: String!): Boolean!
 
   """Use to delete a user. Not reversible.."""
   deleteUser(email: String!): Boolean!

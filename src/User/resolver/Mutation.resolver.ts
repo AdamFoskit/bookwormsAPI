@@ -66,8 +66,8 @@ export default class UserQueryResolver {
     }
 
     @Mutation(() => Boolean, { description: "Use to clock in." })
-    async clockIn(@Arg('userID') userID: string, @Arg('time') time: string, @Arg('location') location: string): Promise<boolean> {
-        const foundUser = await UserSchema.findById(userID);
+    async clockIn(@Arg('email') email: string, @Arg('time') time: string, @Arg('location') location: string): Promise<boolean> {
+        const foundUser = await UserSchema.findOne({ email });
         if (!foundUser) throw new Error("No User could be found with that ID.")
         if (foundUser.clockIns.length == 100)
             foundUser.clockIns.splice(0, 1)
@@ -78,8 +78,8 @@ export default class UserQueryResolver {
     }
 
     @Mutation(() => Boolean, { description: "Use to clock out." })
-    async clockOut(@Arg('userID') userID: string, @Arg('time') time: string, @Arg('location') location: string): Promise<boolean> {
-        const foundUser = await UserSchema.findById(userID);
+    async clockOut(@Arg('email') email: string, @Arg('time') time: string, @Arg('location') location: string): Promise<boolean> {
+        const foundUser = await UserSchema.findOne({ email });
         if (!foundUser) throw new Error("No User could be found with that ID.")
         if (foundUser.clockOuts.length == 100)
             foundUser.clockOuts.splice(0, 1)
