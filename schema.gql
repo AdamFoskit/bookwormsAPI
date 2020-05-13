@@ -103,7 +103,7 @@ type Mutation {
   clockOut(location: String!, time: String!, userID: String!): Boolean!
 
   """Use to delete a user. Not reversible.."""
-  deleteUser(id: String!): Boolean!
+  deleteUser(email: String!): Boolean!
 }
 
 type PendingShiftDto {
