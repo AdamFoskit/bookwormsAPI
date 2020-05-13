@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import { ApolloServer } from 'apollo-server-express';
+import * as bodyparser from 'body-parser';
 import * as Express from 'express';
 import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
@@ -17,21 +18,25 @@ const main = async () => {
         useUnifiedTopology: true,
         useFindAndModify: true,
         poolSize: 20,
+
     });
     const schema = await buildSchema({
         resolvers: [__dirname + "/src/**/*.resolver.ts"],
         // eslint-disable-next-line no-undef
         emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
+
     });
 
-    const apolloServer = new ApolloServer({ schema, playground: true, introspection: true });
+    const apolloServer = new ApolloServer({ schema, playground: true, introspection: true, });
 
     const app = Express();
     app.use(helmet());
+    app.use(bodyparser.json({ limit: '1mb' }));
     apolloServer.applyMiddleware({ app });
 
     app.listen(process.env.PORT || 7000, () => {
         console.log('server started on http://localhost:7000/graphql');
+        // console.dir(ip.address());
     });
 };
 
