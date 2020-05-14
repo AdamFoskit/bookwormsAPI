@@ -74,8 +74,8 @@ type Mutation {
   """Use to delete a blackout date. This cannot be reversed"""
   deleteBlackout(id: String!): Boolean
   addPendingShift(toUserID: String!, fromUserID: String!, shiftID: String!): String!
-  declinePendingShift(shiftID: String!): Boolean!
-  acceptPendingShift(shiftID: String!): Boolean!
+  declinePendingShift(shiftID: String!): String
+  acceptPendingShift(shiftID: String!): String!
 
   """
   Use to create one User. Date must be passed as a string. Must use date.toISOString() if updating start/end.
@@ -94,7 +94,7 @@ type Mutation {
   addTradeBoardShift(shiftID: String!, userID: String!): AvailableShiftDto
 
   """Use to remove a shift from the trade board."""
-  removeTradeBoardShift(shiftID: String!, userID: String!): Boolean!
+  removeTradeBoardShift(shiftID: String!, userID: String!): String!
 
   """Use to clock in."""
   clockIn(location: String!, time: String!, email: String!): Boolean!

@@ -54,15 +54,15 @@ export default class UserQueryResolver {
         return foundShift
     }
 
-    @Mutation(() => Boolean, { description: "Use to remove a shift from the trade board." })
-    async removeTradeBoardShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<boolean> {
+    @Mutation(() => String, { description: "Use to remove a shift from the trade board." })
+    async removeTradeBoardShift(@Arg('userID') userID: string, @Arg('shiftID') shiftID: string): Promise<string> {
         const foundUser = await UserSchema.findOne({ _id: userID, 'shifts._id': shiftID });
         if (!foundUser) throw new Error("No User could be found with that ID that also has that shift ID.")
         const foundShift = foundUser.shifts.find((shift) => shift._id.toString() == shiftID)
         foundShift.available = false;
         foundUser.markModified('shifts')
         foundUser.save()
-        return true
+        return foundShift._id
     }
 
     @Mutation(() => Boolean, { description: "Use to clock in." })

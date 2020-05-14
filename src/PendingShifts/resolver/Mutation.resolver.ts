@@ -17,14 +17,14 @@ export default class PendingShiftMutation {
         return createdPending._id
     }
 
-    @Mutation(() => Boolean)
-    async declinePendingShift(@Arg('shiftID') shiftID: string): Promise<boolean> {
-        await PendingShiftsSchema.findByIdAndDelete(shiftID)
-        return true
+    @Mutation(() => String, { nullable: true })
+    async declinePendingShift(@Arg('shiftID') shiftID: string): Promise<string> {
+        const deleted = await PendingShiftsSchema.findByIdAndDelete(shiftID)
+        return deleted._id
     }
 
-    @Mutation(() => Boolean)
-    async acceptPendingShift(@Arg('shiftID') shiftID: string): Promise<boolean> {
+    @Mutation(() => String)
+    async acceptPendingShift(@Arg('shiftID') shiftID: string): Promise<string> {
         const foundShift = await PendingShiftsSchema.findById(shiftID)
         if (!foundShift) throw new Error(`Unable to find PendingShift with ID: ${shiftID}`)
         const foundFromUser = await UserSchema.findById(foundShift.fromUserID);
@@ -35,8 +35,6 @@ export default class PendingShiftMutation {
         if (shiftIndex == -1)
             throw new Error(`Cannot find shift in fromUser with ID: ${shiftID}`)
         const [removedShift] = foundFromUser.shifts.splice(shiftIndex, 1)
-        console.log({ removedShift });
-
         removedShift.available = false;
         removedShift.title = foundToUser.firstName;
         foundToUser.shifts.push(removedShift)
@@ -45,6 +43,6 @@ export default class PendingShiftMutation {
         foundToUser.save();
         foundFromUser.save();
         foundShift.remove();
-        return true
+        return removedShift._id
     }
 }
